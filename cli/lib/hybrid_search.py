@@ -8,7 +8,6 @@ from .keyword_search_utils import (
     BM25_B
 )
 
-
 class HybridSearch:
     def __init__(self, documents):
         self.documents = documents
@@ -80,8 +79,8 @@ class HybridSearch:
                     "semantic_rank": float("inf"),
                     "rrf_score": 0
                 }
-            master_results[id]["keyword_rank"] = min(master_results[id]["keyword_rank"], rrf_score(i+1, k))
-            master_results[id]["rrf_score"] += master_results[id]["keyword_rank"]
+            master_results[id]["keyword_rank"] = i+1
+            master_results[id]["rrf_score"] += rrf_score(i+1, k)
 
         semantic_results = self.semantic_search.search_chunks(query, limit*500)
         for i, semantic_res in enumerate(semantic_results):
@@ -93,8 +92,8 @@ class HybridSearch:
                     "semantic_rank": float("inf"),
                     "rrf_score": 0
                 }
-            master_results[id]["semantic_rank"] = min(master_results[id]["semantic_rank"], rrf_score(i+1, k))
-            master_results[id]["rrf_score"] += master_results[id]["semantic_rank"]
+            master_results[id]["semantic_rank"] =i+1
+            master_results[id]["rrf_score"] += rrf_score(i+1, k)
         
         sorted_results = sorted(master_results.items(), key=lambda item:item[1]["rrf_score"], reverse=True)[:limit]
         return sorted_results
