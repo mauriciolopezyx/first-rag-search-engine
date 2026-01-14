@@ -140,7 +140,7 @@ class InvertedIndex:
         length_norm = 1 - b + b * (doc_length / avg_doc_length) if avg_doc_length > 0 else 1
         return (tf * (k1 + 1)) / (tf + k1 * length_norm)
 
-    def bm25_search(self, term: str, k1: float, b: float) -> float:
+    def bm25_search(self, term: str, k1: float, b: float, limit: int=5) -> float:
         results: dict[int, int] = {}
         tokens = tokenize_text(term)
         for token in tokens:
@@ -150,7 +150,6 @@ class InvertedIndex:
                 bm25 = bm25_idf * bm25_tf
                 results[doc_id] = results.get(doc_id, 0) + bm25
         
-        limit = 5
         sorted_results = sorted(results.items(), key=lambda item:item[1], reverse=True)[:limit]
         formatted_results = []
         for doc_id, score in sorted_results:
