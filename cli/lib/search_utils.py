@@ -101,9 +101,9 @@ def batch_rerank_results(query: str, str_docs: list[str]) -> list[int]:
 
             Return ALL of the given IDs ONLY in order of relevance, with best matches first. Return a valid python list AS A STRING, nothing else.
             
-            For example, if we were given a Movies string with 5 entries (and hence 5 ids), one example could be:
+            For example, if we were given a Movies string with 5 entries (hence 5 ids), one example could be:
             [75, 12, 34, 2, 1]
-            As you can tell it contains ALL 5 initial ids.
+            As you can tell, the resulting list contains all 5 initial ids.
             
             """
         )
